@@ -52,3 +52,10 @@ function generateBookId() {
 const bookIdGenerator = generateBookId()
 ```
 I prefer using closures, since I recently read about them while studying from [mastering js functional programming book](https://github.com/Mohammed-Lashein/mastering-js-functional-programming-book-code/tree/main/chapter2)
+_____
+### `BookFactory` and `BookMapper` circular dependencies
+If you focus in the code of these 2 classes, you will find that they depend on each other (causing a circular dependency).
+
+What is the solution then ? 🤔  
+As claude suggested, I can move the rendering of the books to another class, thus removing the responsibility of books rendering from the factory and mapper.
+In a nutshell, the new class, maybe named `BooksRenderer` is responsible for importing both `BookFactory` and `BookMapper` in order for us to avoid the circular dependency problem. 
