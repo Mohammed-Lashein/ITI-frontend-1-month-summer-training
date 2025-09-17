@@ -1,5 +1,4 @@
 import { Book } from './Book.js'
-import { BookFactory } from './BookFactory.js';
 
 export class BookMapper {
   /* 
