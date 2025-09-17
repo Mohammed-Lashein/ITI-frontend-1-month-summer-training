@@ -59,3 +59,43 @@ If you focus in the code of these 2 classes, you will find that they depend on e
 What is the solution then ? 🤔  
 As claude suggested, I can move the rendering of the books to another class, thus removing the responsibility of books rendering from the factory and mapper.
 In a nutshell, the new class, maybe named `BooksRenderer` is responsible for importing both `BookFactory` and `BookMapper` in order for us to avoid the circular dependency problem. 
+
+Let's continue the talk about the circular dependency:  
+I searched about that issue online, and I found [this stackoverflow question](https://stackoverflow.com/a/4007487/16385537) that addressed the problem. After looking into the code, it seems that this code **intentionally** has circular dependency, so why can't I have it then?
+```java
+public class Team {
+
+    private List<Player> players;
+
+    public void removePlayer(Player player) {
+        removePlayerFromTeam(player);
+        player.removeFromTeam();
+    }
+    public void removePlayerFromTeam(Player player) {
+        players.remove(player);
+        //domain stuff
+    }
+}
+
+public class Player {
+    private Team team;
+
+    public void removeFromTeam() {
+         team = null;
+        //domain stuff
+    }
+    public void leaveTeam() {
+        team.removePlayerFromTeam(this);
+        removeFromTeam();
+    }
+
+}
+```
+
+After asking claude, he pointed out that yes in the `Team` and `Player` classes situation, they have a circular dependency but it corresponds to their **bidirectional domain relationship**: 
+1. A Team has Players
+2. A Player belongs to a Team
+3. Both need to know about each other in order for the relationship to work correctly
+
+But in my code, there is no need to call the `BookFactory` within `BookMapper.getBooks()`.
+Claude suggested using `BookMapper.fromStorage()` instead, since it does the same functionality as `BookFactory.create()` but instead is a method of `BookMapper`.
