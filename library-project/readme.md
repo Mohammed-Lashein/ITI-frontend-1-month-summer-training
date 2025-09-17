@@ -25,3 +25,30 @@ Note that this differs from:
 The above `script` tags are not declared as modules, so if we declared a constant in `form.js`, we would not be able to re-declare it in `modal.js` since the contents of both scripts are sent to the browser as one script.
 
 You can read more about this in an article in [the odin project](https://www.theodinproject.com/lessons/javascript-es6-modules).
+
+### `generateBookId` function
+This function has 2 ways of implementation: 
+```js
+/* 
+  the generateBookId() function could have been written as a closure, instead of depending on the quirky
+  behavior that functions in js are first class objects, meaning that they can be treated like any other 
+  object in the language -- thanks gemini for that last sentence :) 
+*/
+function generateBookId() {
+  if(typeof generateBookId.count === 'undefined') {
+    generateBookId.count = 0
+  }
+  return generateBookId.count++
+}
+```
+AND
+```js
+function generateBookId() {
+  let count = 0;
+  return function() {
+    return count++;
+  } 
+}
+const bookIdGenerator = generateBookId()
+```
+I prefer using closures, since I recently read about them while studying from [mastering js functional programming book](https://github.com/Mohammed-Lashein/mastering-js-functional-programming-book-code/tree/main/chapter2)
