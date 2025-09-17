@@ -32,7 +32,7 @@ export class BookMapper {
     }
     static getBooks() {
     const books = JSON.parse(sessionStorage.getItem('books')) || []
-    const booksInstances = books.map((book) => BookMapper.fromStorage(book.id, book.title, book.author, book.pagesNumber, book.isRead))
+    const booksInstances = books.map((book) => BookMapper.fromStorage(book))
     return booksInstances
   }
 
