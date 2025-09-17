@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- navbar start -->
+  <nav>
+    <header>
+      Library
+    </header>
+    <button class="login">Log In</button>
+  </nav>
+  <!-- navbar end -->
+
+  <main>
+    <div class="main-container">
+      <section class="add-book-container">
+        <button class="btn add-book">+ Add book</button>
+
+        <!-- add book modal start -->
+        <div class="modal hidden">
+            <form action="" class="add-new-book-form-container">
+              <header>Add new book</header>
+              <div class="form-group">
+                <input type="text" name="book_title" placeholder="Title"/>
+              </div>
+          
+              <div class="form-group">
+                <input type="text" name="book_author" placeholder="Author"/>
+              </div>
+              <div class="form-group">
+                <input type="number" name="book_pages_number"
+                maxlength="1000"
+                placeholder="Number of Pages"/>
+              </div>
+              <div class="form-group">
+                <label for="is_read">
+                  Have you read it?
+                </label>
+                <input type="checkbox" name="is_read" id="is_read">
+              </div>
+              <input type="submit" value="Submit" class="btn btn-light-green">
+            </form>
+          </div>
+
+        <!-- add book modal end -->
+      </section>
+      <section class="books-container">
+        <article class="book">
+          <p class="book__title">book 1</p>
+          <p class="book__description"> desc 1</p>
+          <p class="book__pages-count">12 pages</p>
+          <button class="btn btn-light-green read">Read</p>
+          <button class="btn">Remove</button>
+        </article>
+      
+        <article class="book">
+          <p class="book__title">book 1</p>
+          <p class="book__description"> desc 1</p>
+          <p class="book__pages-count">12 pages</p>
+          <button class="btn btn-light-red not-read">Not read</p>
+          <button class="btn">Remove</button>
+        </article>
+      </section>
+    </div>
+    <footer>
+    <script>
+      // I got the below trick from the source code from michalosman profile on github
+      document.write(`Copyright &copy; ${new Date().getFullYear()} michalosman at github`)
+    </script>
+    </div>
+  </main>
+    <script  type="module" src="./main.js"></script>
+</body>
+</html>
