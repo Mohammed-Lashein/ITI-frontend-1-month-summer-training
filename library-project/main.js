@@ -1,1 +1,1 @@
-// to do
+import './modal.js'
