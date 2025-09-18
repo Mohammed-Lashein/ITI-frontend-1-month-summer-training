@@ -61,4 +61,11 @@ export class Book {
     // re-render the books
     BookFactory.renderBooks()
   }
+  toggleReadStatus() {
+    // get the book with the target id
+    // get the books from data source
+    // toggle the book read status
+    // update data source
+    // re-render books
+  }
 }
