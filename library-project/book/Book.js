@@ -41,6 +41,7 @@ export class Book {
     readStatusBtn.className = 'btn'
     readStatusBtn.classList.add(`${this.isRead ? 'btn-light-green' : 'btn-light-red'}`)
     readStatusBtn.textContent = this.isRead ? 'Read' : 'Not read'
+    readStatusBtn.onclick = this.toggleReadStatus.bind(this)
 
     const removeBookButton = document.createElement('button')
     removeBookButton.className = 'btn'
@@ -63,9 +64,17 @@ export class Book {
   }
   toggleReadStatus() {
     // get the book with the target id
-    // get the books from data source
-    // toggle the book read status
+    const books = BookMapper.getBooks()
+    // get the books from data source + toggle the book read status
+    const updatedBooks = books.map((book) => {
+      if(book.id === this.id) {
+        book.isRead = !book.isRead
+      }
+      return book
+    })
     // update data source
+    BookMapper.updateBooks(updatedBooks)
     // re-render books
+    BookFactory.renderBooks()
   }
 }
