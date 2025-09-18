@@ -6,7 +6,7 @@ I like the solution by [the amazing engineer michalosman](https://github.com/mic
 I was learning design patterns like factory and data mapper, so I tried to implement these.
 I would say that I was bragging with adding real world structure to a small application that won't need this separation of concerns at all, but consider it as an introduction to design patterns in a non-advanced way.
 
-  ## Table of contents: 
+## Table of contents: 
   - [Note 1 : ESM private scope](#note-1--esm-private-scope)
   - [`generateBookId` function](#generatebookid-function)
   - [`BookFactory` and `BookMapper` circular dependencies](#bookfactory-and-bookmapper-circular-dependencies)
@@ -231,3 +231,12 @@ After asking claude, he told me that this behavior is expected. Since the 2nd sc
 
 And to quote from claude's answer: 
 > Inline event handlers like `onclick="hello()"` execute in the global scope, so they can access globally declared functions.
+____
+### Grammatical note regarding "switching back..."
+Which is grammatically correct: 
+> switching **from** react **back to** vanilla js
+OR
+> Switching **back from** react **to** vanilla js mindset
+
+After asking claude, he told me that the latter is more natural, while the first form is a bit awkward.
+That's why I chose the latter as the title of the previous note
