@@ -35,16 +35,6 @@ nav button.login {
 }
 /* navbar styles end */
 
-main {
-  /*
-    I don't remember how using either min-height or max-height will differ in the UI. Let's keep that for 
-  later
-  */
-  /* min-height: 100vh; */
-  max-height: 100vh;
-  height: 100vh;
-}
-
 .main-container {
   margin: auto;
   max-width: 800px;
