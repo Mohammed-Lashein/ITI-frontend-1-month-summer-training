@@ -14,6 +14,7 @@ I would say that I was bragging with adding real world structure to a small appl
   - [Functions hoisting, deep dive](#functions-hoisting-deep-dive)
   - [Switching back from react to vanilla js mindset](#switching-back-from-react-to-vanilla-js-mindset)
   - [switching back from ... to ... grammatical sidenote](#grammatical-note-regarding-switching-back)
+  - [the return of `this` quirks](#the-return-of-this-quirks)
 
 ### Note 1 : ESM private scope
 In `modal.js` I declared a `form` constant to attach an event listener to it.
@@ -241,3 +242,65 @@ OR
 
 After asking claude, he told me that the latter is more natural, while the first form is a bit awkward.
 That's why I chose the latter as the title of the previous note
+____
+### The return of `this` quirks
+I was working on implementing the remove book functionality: 
+```js
+// Book.js
+class Book {
+  // ....
+  render() {
+    // deep in this method
+    removeBookButton.onclick = this.remove
+  }
+  remove() {
+    console.log(this.id) // nothing
+    console.log(this) // DOM button element!
+
+    // to write book removal logic
+  }
+}
+```
+At first, I tried clicking on the button to see the id, but I got an empty string in the console.  
+Why did that happen? 🤔  
+Because inadvertently, we were trying to access the `id` of the `button` element, which wasn't set, that's why we were getting an empty string.
+
+That leads us to another question: Why did `this` in `Book.remove()` refer to the `button`, not the `Book` instance?  
+Before working on this project, I was studying in the 1st 2 chapters from ydkjs series 2nd book this and object prototypes. You can find [the explanation in great detail](https://github.com/Mohammed-Lashein/mastering-js-functional-programming-book-code/blob/main/chapter3/ydkjs/readme.md) about the quirky behavior that happened here.  
+
+But in a nutshell, here is the reason of what happened: 
+> `this` gets its value from where it is *called*, not where it is defined
+
+Let's discuss the code snippet in some detail: 
+```js
+  removeBookButton.onclick = this.remove
+```
+We are setting the handler responsible for the `click` event to be the `Book.remove()` method. But since that method uses `this` internally, what we have done here is just setting a *reference* to that method.
+
+When the method is invoked: 
+```js
+remove() {
+    console.log(this.id) // nothing
+    console.log(this) // DOM button element!
+  }
+```
+Claude mentioned that the browser sets `this` to the element that triggered the event (in our case, it is the `button` element), that's why we got an empty string in the console. We were trying to access the `id` of the `button`, which we haven't assigned a value to.
+
+What is the solution then? 🤔  
+We need a way to **bind** (pun intended) the value of `this` to our `Book` instance.
+```js
+// Book.js
+class Book {
+  // ....
+  render() {
+    // that's it!
+    removeBookButton.onclick = this.remove.bind(this)
+  }
+  remove() {
+    console.log(this.id) // correct book instance id
+    console.log(this) // Book instance !
+    // to write book removal logic
+  }
+}
+```
+Now on calling `Book.remove()` in response to the `click` event, it will refer to the `Book` instance not the `button` element.
