@@ -46,15 +46,7 @@ if(v.passes()) {
 }
 
 function getBookFormData() {
-  const bookTitle = document.querySelector("input[name='book_title']")
-  const bookAuthor = document.querySelector("input[name='book_author']")
-  const bookNumberOfPages = document.querySelector("input[name='book_pages_number']")
-  const isReadCheckbox = document.querySelector("input[name='is_read']")
-
-  // can I call getBookFormElements here ? What about declaring it above this function ? 
-
-    const {bookTitleElement, bookAuthorElement, bookNumberOfPagesElement, isReadCheckboxElement} = getBookFormElements()
-
+  const {bookTitleElement, bookAuthorElement, bookNumberOfPagesElement, isReadCheckboxElement} = getBookFormElements()
 
   return {
     title: bookTitleElement.value,
