@@ -99,3 +99,28 @@ After asking claude, he pointed out that yes in the `Team` and `Player` classes 
 
 But in my code, there is no need to call the `BookFactory` within `BookMapper.getBooks()`.
 Claude suggested using `BookMapper.fromStorage()` instead, since it does the same functionality as `BookFactory.create()` but instead is a method of `BookMapper`.
+______
+### Using spread syntax in a method call
+In this code snippet: 
+```js
+  let book = BooksFactory.create(null, ...data) 
+```
+I got an error in the console saying: 
+> Uncaught TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function
+
+I thought the problem was with `BooksFactory.create()` method. But aren't methods functions?  
+Yes for sure. And after asking claude, he explained the error (I paraphrase it): 
+> It is not that a method is not a function. The problem lies in that we are spreading an object in the place of function arguments.
+
+But hey, we do so in react all of the time. What's the problem now?  
+You can spread `props` in jsx, but you can't do so in vanilla js specially in function arguments.
+
+This is really weird. How are we able to do so in jsx but not in vanilla js?  
+This is how transpilers work. You provide them with any syntax you want and they transform it to the corresponding code that can work.  
+
+I found this [nice comment on stackoverflow](https://stackoverflow.com/questions/74935127/spreading-props-in-react-as-attributes#comment132238814_74935127) that explains this issue. 
+
+As a finale, I would like to quote from [mdn docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax): 
+> The **spread** (...) syntax allows an iterable, such as an array or string, to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected. In an *object literal*, the spread syntax enumerates the properties of an object and adds the key-value pairs to the object being created.
+
+Notice how they explicitly mention that the behavior of spread operator works in **object literals**, not on passing an object as an argument to a function.
