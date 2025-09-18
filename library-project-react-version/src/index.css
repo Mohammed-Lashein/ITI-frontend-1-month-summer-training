@@ -1,3 +1,179 @@
+/* 
+  I prefer to put blank lines between css rules declaration according to airbnb css guide: 
+    https://github.com/airbnb/css?tab=readme-ov-file#formatting
+ */
 * {
   box-sizing: border-box;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  background-color: #f1f1f1;
+  /* safe area to ensure that the footer will not overlap with the main content. This is clearly apparent
+  in smaller screens. Try removing the margin-bottom and see how the footer will overlap with the main
+  content on smaller screens  */
+  margin-bottom: 50px;
+}
+
+/* navbar styles start */
+nav {
+  padding: 1rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 1px 5px 0px gray;
+  /* box-shadow: <offset-x> <offset-y> <spread> color */
+  background-color: white;
+}
+
+nav header {
+  font-weight: bold;
+}
+
+nav button.login {
+  border: none;
+  background-color: #ddd;
+  text-transform: capitalize;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+}
+/* navbar styles end */
+
+.main-container {
+  margin: auto;
+  max-width: 800px;
+}
+
+/* add button section styles start */
+section.add-book-container {
+  text-align: center;
+  padding: 2rem 0;
+  /* padding: 1rem 0; */
+  /* margin: auto; */
+}
+
+button.add-book {
+  border: none;
+  background-color: #ddd;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+/* add button section styles end */
+
+/* modal styles start */
+.modal {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 18px;
+  /* display: none; */
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal * {
+  font-size: inherit;
+}
+
+.add-new-book-form-container {
+  background-color: #f3f3f3;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  display: grid;
+  gap: 0.5rem;
+  min-width: 230px;
+  z-index: 2;
+}
+
+.add-new-book-form-container input {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+}
+
+form header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+/* modal styles end */
+
+
+.books-container {
+  display: grid;
+  padding: 2rem;
+  padding-top: 0;
+  gap: .7rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.book {
+  display: grid;
+  gap: 1.2rem;
+  text-align: center;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  background-color: white;
+}
+
+.btn {
+  align-self: stretch;
+  background-color: #eee;
+  cursor: pointer;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  transition: filter 0.3s ease;
+}
+
+.btn-light-green {
+  background-color: hsl(120, 76%, 77%);
+}
+
+.btn-light-red {
+  background-color: hsl(0, 78%, 77%);
+}
+
+.btn:hover {
+  filter: brightness(90%);
+
+}
+
+footer {
+  text-align: center;
+  /* using position: absolute; spoils the design on sm and md screens. It is 
+  better to preserve the position of the element in the DOM so when more 
+  notes are added the design stays correct */
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
