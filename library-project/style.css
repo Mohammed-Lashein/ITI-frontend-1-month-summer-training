@@ -8,6 +8,9 @@
   font-family: sans-serif;
 }
 
+body {
+  background-color: #f1f1f1;
+}
 /* navbar styles start */
 nav {
   padding: 1rem 4rem;
@@ -16,6 +19,7 @@ nav {
   align-items: center;
   box-shadow: 0px 1px 5px 0px gray;
   /* box-shadow: <offset-x> <offset-y> <spread> color */
+  background-color: white;
 }
 
 nav header {
@@ -32,7 +36,6 @@ nav button.login {
 /* navbar styles end */
 
 main {
-  background-color: #f1f1f1;
   /*
     I don't remember how using either min-height or max-height will differ in the UI. Let's keep that for 
   later
