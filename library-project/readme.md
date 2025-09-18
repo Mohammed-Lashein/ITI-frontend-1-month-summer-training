@@ -16,6 +16,14 @@ I would say that I was bragging with adding real world structure to a small appl
   - [switching back from ... to ... grammatical sidenote](#grammatical-note-regarding-switching-back)
   - [the return of `this` quirks](#the-return-of-this-quirks)
   - [Sticky footer note](#create-a-sticky-footer)
+  - [Static variable syntax in js](#static-variable-syntax-in-js)
+  - [flex stuff](#flex-stuff)
+  - [Selectors specificity revisited](#selectors-specificity-revisited)
+  - [HSL explained](#hsl-explained)
+  - [JavaScript classes quirks](#javascript-classes-quirks)
+  - [Classes design notes](#classes-design-notes)
+  - [Export a class or utils?](#export-a-class-or-utils)
+  - [Why use a DataMapper?](#why-would-we-use-datamapper-when-we-can-stringify-directly-the-object-instance-since-it-is-also-a-js-object)
 
 ### Note 1 : ESM private scope
 In `modal.js` I declared a `form` constant to attach an event listener to it.
@@ -313,3 +321,187 @@ This isn't the kind of a good design. I inspected the source code from github an
 
 I wanted to learn more about these, so I searched online about how to create a sticky footer.
 I found [this question on stackoverflow](https://stackoverflow.com/questions/29069498/how-to-make-a-sticky-footer-using-css) which has exactly the same code used in this project.
+_____
+These are some notes from the older version of the project. 
+
+### Static variable syntax in js
+So in the `generateBookId` function, I needed the function to hold a static variable instead of polluting the global scope with a variable to increment.
+
+I forgot that js doesn't support the `static` keyword on functions, so I searched stackoverflow and asked some LLMs to get some insights.
+
+Here are the approaches that I found.
+
+1. Create a class and expose the id generation utility from it
+```js
+class IDsGenerator {
+  static bookId = 0;
+  public generateBookId() {
+    return bookId++
+  }
+}
+console.log(IDsGenerator.generateBookId()); // 0
+console.log(IDsGenerator.generateBookId()); // 1
+console.log(IDsGenerator.generateBookId()); // 2
+```
+2. Ignore the syntactic sugar and use the plain old function syntax instead
+```js
+function generateBookId() {
+  if(typeof generateBookId.count === 'undefined') {
+    generateBookId.count = 0
+  }
+  return generateBookId.count++
+}
+
+console.log(generateBookId()); // 0
+console.log(generateBookId()); // 1
+console.log(generateBookId()); // 2
+```
+3. Use closures
+```js
+function idGenerator() {
+  let id = 0;
+  return () => {
+    return id++
+  }
+}
+let generateId = idGenerator();
+console.log(generateId());
+console.log(generateId());
+console.log(generateId());
+```
+### Flex stuff
+What is the difference between `justify-content` 2 values `space-around` and `space-evenly`?  
+
+Quoting from mdn docs, which you will understand but there is a coming clearer explanation: 
+> `space-around`: The items are evenly distributed within the alignment container along the main axis. The spacing between each pair of adjacent items is the same. The empty space before the first and after the last item equals half of the space between each pair of adjacent items. If there is only one item, it will be centered.
+> `space-evenly`: The items are evenly distributed within the alignment container along the main axis. The spacing between each pair of adjacent items, the main-start edge and the first item, and the main-end edge and the last item, are all exactly the same.
+
+The easier explanation from [a video for elzero web school (arabic): ](https://www.youtube.com/watch?v=_ScoBsCdJ7U&ab_channel=ElzeroWebSchool)
+> `space-around` adds the space *around* the elements, while `space-evenly` distributes the space *evenly* or *equally* among the elements (an equal space before and after each element)
+____
+### Selectors specificity revisited
+```css
+section.books-container, /* specificity (0, 1, 1)*/
+.books-container { /* specificity (0, 1, 0)*/
+  
+}
+```
+What is the difference between both selectors' specificities? What does each number indicate?  
+The numbers follow this order and each column is compared left-to-right to determine the higher specificity weight: **ID-CLASS-TYPE**
+____
+### HSL explained
+- Hue: represents the color itself red, green or blue
+  - 0 or 360 means red
+  - 120 is green
+  - 240 is blue
+- Saturation: Purity of the color.
+  - 100% means a vivid color
+  - 0% means a shade of gray
+- Lighness: determines how light or dark the color is
+  - 100% lightness results in white
+  - 0% lightness results in black
+____
+### JavaScript classes quirks
+What is the difference between these 2 syntaxes in js classes?
+```js
+class MyClass {
+  prop1;
+  prop2
+  constructor(p1, p2) {
+    this.prop1 = p1;
+    this.props2 = p2;
+  }
+}
+class MyOtherClass {
+  constructor(p1, p2) {
+    this.prop1 = p1;
+    this.prop2 = p2;
+  }
+}
+```
+=> Practically, it doesn't matter which you choose.   
+The first syntax allows you to provide a default value for the prop if it wasn't initialized in the constructor, whereas the second syntax the property can't have a default value. It gets its value from the constructor.
+
+Regarding the default values, consider this snippet: 
+```js
+class Pudding {
+  // providing a default value for the property doesn't work in js the way you expect 
+  p1 = 1
+  constructor(p1, p2) {
+    this.p1 = p1
+  }
+}
+const p = new Pudding()
+console.log(p.p1) // undefined
+```
+Why didn't `p.p1` get its default value that I declared in the class body? 🤔
+Claude mentioned that when we pass nothing as a value for `p1`, `this.p1` will have a value of `undefined`. To overcome this, we may use either OR operator or nullish coalescing operator: 
+```js
+class Pudding {
+  p1 = 1
+  constructor(p = 2, p2) {
+    this.p1 = p
+  }
+}
+const p = new Pudding()
+console.log(p.p1) // 2
+```
+
+In other languages like php, you need to declare the properties in the class body before the constructor (PHP 8+): 
+```php
+class MyClass {
+  public string $prop1;
+  public string $prop2;
+
+  public function __construct(string $p1, string $p2) {
+    $this->prop1 = $p1;
+    $this->prop2 = $p2;
+  }
+}
+```
+Or you can use the quirky **constructor property promotion**: 
+```php
+class MyClass {
+  public function __construct(
+    public string $prop1,
+    public string $prop2
+  ) {}
+}
+```
+which I don't like. I prefer to stick to the class declaration present in Java.
+____
+### Classes design notes
+The v1 of the design was working, but it had some problems:
+1. The `Book` class was responsible for 2 things: 
+   1. Creating new books
+   2. Reconstructing stored books
+So I will create a `BookFactory` that is responsible for objects instantiation.
+____
+### Export a class or utils?
+I wonder if in modern js I should encapsulate the logic I use in a class then export that class, or should I export different utilities then import any of them in the module I will want to use.
+
+After asking chat, he told me that I should export a class when the utils I use need to have a shared state. But if my utils are stateless, I can just export them without the need of having a wrapper class.
+
+He also gave me some examples that are worth documenting here.
+
+Exporting a class that encapsulates shared logic:
+```js
+// math.js
+export class Calculator {
+  constructor() {
+    this.memory = 0;
+  }
+  add(x, y) { return x + y; }
+  store(value) { this.memory = value; }
+  recall() { return this.memory; }
+}
+```
+Exporting stateless utilities:
+```js
+// math.js
+export function add(x, y) { return x + y; }
+export function subtract(x, y) { return x - y; }
+```
+_____
+### Why would we use `DataMapper` when we can stringify directly the object instance since it is also a js object?
+You may not notice the benefit of doing so here, but the DataMapper pattern is responsible for insulating  client code from the details of data preparation to be stored in the database and vice versa.
