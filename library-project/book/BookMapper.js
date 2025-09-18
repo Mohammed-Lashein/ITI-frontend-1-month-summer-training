@@ -34,5 +34,8 @@ export class BookMapper {
     const booksInstances = books.map((book) => BookMapper.fromStorage(book))
     return booksInstances
   }
-
+  static updateBooks(books) {
+    const booksData = books.map((book) => BookMapper.toStorage(book))
+    sessionStorage.setItem('books', JSON.stringify(booksData))
+  }
 }

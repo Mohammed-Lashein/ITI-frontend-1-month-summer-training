@@ -1,3 +1,6 @@
+import { BookFactory } from './BookFactory.js';
+import { BookMapper } from './BookMapper.js';
+
 function generateBookId() {
   let count = 0;
   return function() {
@@ -49,8 +52,13 @@ export class Book {
   }
   remove() {
     // get the books from data source
+    const books = BookMapper.getBooks()
     // filter the books from the one with the required id
+    const filteredBooks = books.filter((book) => book.id !== this.id)
+    // console.log(filteredBooks)
     // update data source with new books value
+    BookMapper.updateBooks(filteredBooks)
     // re-render the books
+    BookFactory.renderBooks()
   }
 }
