@@ -31,12 +31,11 @@ export class Book {
     bookDescription.textContent = this.author
 
     const bookPagesCount = document.createElement('p')
-    bookPagesCount.className = 'book__pages-number'
+    bookPagesCount.className = 'book__pages-number' // same here
     bookPagesCount.textContent = this.pagesNumber
 
     const readStatusBtn = document.createElement('button')
     readStatusBtn.className = 'btn'
-    // add the specific styles according to conditions later
     readStatusBtn.classList.add(`${this.isRead ? 'btn-light-green' : 'btn-light-red'}`)
     readStatusBtn.textContent = this.isRead ? 'Read' : 'Not read'
 
