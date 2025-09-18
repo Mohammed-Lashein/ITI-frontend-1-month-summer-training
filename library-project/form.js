@@ -1,4 +1,4 @@
-import { BooksFactory } from './book/BookFactory.js'
+import { BookFactory } from './book/BookFactory.js'
 import { FormValidator } from './FormValidator.js'
 import { modal } from './modal.js'
 import { BookMapper } from './book/BookMapper.js';
@@ -32,8 +32,8 @@ let v = new FormValidator(data, rules)
 // console.log('fails?', v.fails());
 
 if(v.passes()) {
-  BookMapper.addBook(data)
-  booksContainer.innerHTML = BooksFactory.renderBooks()
+  BookMapper.addBook(BookFactory.createFromFormData(data))
+  booksContainer.innerHTML = BookFactory.renderBooks()
   modal.classList.add('hidden')
   
   const {bookTitleElement, bookAuthorElement, bookNumberOfPagesElement, isReadCheckboxElement} = getBookFormElements()

@@ -1,7 +1,7 @@
 import { Book } from './Book.js'
 import { BookMapper } from './BookMapper.js'
 
-export class BooksFactory {
+export class BookFactory {
   static create(id, title, author, pagesNumber, isRead) {
     const book = new Book(id, title, author, pagesNumber, isRead)
     return book

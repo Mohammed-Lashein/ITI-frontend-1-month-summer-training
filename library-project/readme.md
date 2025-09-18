@@ -103,12 +103,12 @@ ______
 ### Using spread syntax in a method call
 In this code snippet: 
 ```js
-  let book = BooksFactory.create(null, ...data) 
+  let book = BookFactory.create(null, ...data) 
 ```
 I got an error in the console saying: 
 > Uncaught TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function
 
-I thought the problem was with `BooksFactory.create()` method. But aren't methods functions?  
+I thought the problem was with `BookFactory.create()` method. But aren't methods functions?  
 Yes for sure. And after asking claude, he explained the error (I paraphrase it): 
 > It is not that a method is not a function. The problem lies in that we are spreading an object in the place of function arguments.
 
