@@ -8,9 +8,18 @@
   font-family: sans-serif;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
 body {
   background-color: #f1f1f1;
+  /* safe area to ensure that the footer will not overlap with the main content. This is clearly apparent
+  in smaller screens. Try removing the margin-bottom and see how the footer will overlap with the main
+  content on smaller screens  */
+  margin-bottom: 50px;
 }
+
 /* navbar styles start */
 nav {
   padding: 1rem 4rem;
@@ -163,8 +172,7 @@ footer {
   /* using position: absolute; spoils the design on sm and md screens. It is 
   better to preserve the position of the element in the DOM so when more 
   notes are added the design stays correct */
-  /* position: absolute; */
-  position: relative;
+  position: absolute;
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
