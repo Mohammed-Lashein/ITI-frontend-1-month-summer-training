@@ -11,8 +11,9 @@ export class BookFactory {
   }
   static renderBooks() {
     const books = BookMapper.getBooks()
-    return books
-    .map((book) => book.render())
-    .join("")
+    const booksContainer = document.querySelector('.books-container')
+    const booksElements = books.map((book) => book.render())
+    
+    booksContainer.append(...booksElements)
   }
 }

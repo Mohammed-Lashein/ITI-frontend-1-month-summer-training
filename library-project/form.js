@@ -33,7 +33,7 @@ let v = new FormValidator(data, rules)
 
 if(v.passes()) {
   BookMapper.addBook(BookFactory.createFromFormData(data))
-  booksContainer.innerHTML = BookFactory.renderBooks()
+  BookFactory.renderBooks()
   modal.classList.add('hidden')
   
   const {bookTitleElement, bookAuthorElement, bookNumberOfPagesElement, isReadCheckboxElement} = getBookFormElements()
