@@ -175,3 +175,53 @@ I asked claude about so, he told me that php has different behavior from js wher
 
 Claude summarized: 
 > PHP doesn't "move" these functions to the top like JavaScript would. Instead, it knows about all functions before execution begins.
+____
+### Switching back from react to vanilla js mindset
+In this code snippet: 
+```js
+// book/Book.js
+class Book {
+  // somewhere in the class...
+    render() {
+    const article = document.createElement('article')
+    article.className = 'book'
+    const bookTitle = document.createElement('p')
+    bookTitle.className = 'book__title'
+    const bookDescription = document.createElement('p')
+    bookDescription.className = 'book__description'
+    const bookPagesCount = document.createElement('p')
+    bookPagesCount.className = 'book__pages-count'
+
+    const readStatusBtn = document.createElement('button')
+
+    // notice the onclick handler on the remove button
+    return `
+          <article class="book">
+            <p class="book__title">"${this.title}"</p>
+            <p class="book__description">${this.author}</p>
+            <p class="book__pages-count">${this.pagesNumber} pages</p>
+            <button class="btn ${this.isRead ? 'btn-light-green' : 'btn-light-red'} read">${this.isRead ? 'Read' : 'Not read'}</p>
+            <button class="btn" onclick="hello()">Remove</button>
+        </article>
+
+    `
+  }
+}
+// not reachable code
+function hello() {
+  console.log('hi rm btn')
+}
+```
+I didn't want to use the old school `onclick` on the button element, but since we are used to that in react, I gave it a try.  
+However, it didn't work! WHY?  
+=> Since we are using ESM, and we are not importing `Book.js` in `main.js`, then the `hello()` function is not reachable.  
+
+How to make that function reachable? 🤔  
+I tried adding it in `main.js`, but that also didn't work. Why?  
+=> After asking claude, he told me that functions declared in an ESM are accessible **within** that module. They are not added to the global scope (so you can't find them as a property of the `window` object).
+
+Finally, I tried adding a `<script>` tag below the script of `main.js` and I created the function. Now it is finally reachable by the code 🙌.  
+After asking claude, he told me that this behavior is expected. Since the 2nd script is not a module, functions declared in it are available to the global scope.
+
+And to quote from claude's answer: 
+> Inline event handlers like `onclick="hello()"` execute in the global scope, so they can access globally declared functions.
