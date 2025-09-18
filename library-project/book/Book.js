@@ -42,8 +42,15 @@ export class Book {
     const removeBookButton = document.createElement('button')
     removeBookButton.className = 'btn'
     removeBookButton.textContent = 'Remove'
+    removeBookButton.onclick = this.remove.bind(this)
 
     bookContainer.append(bookTitle, bookDescription, bookPagesCount, readStatusBtn, removeBookButton)
     return bookContainer
+  }
+  remove() {
+    // get the books from data source
+    // filter the books from the one with the required id
+    // update data source with new books value
+    // re-render the books
   }
 }
