@@ -33,7 +33,6 @@ let v = new FormValidator(data, rules)
 
 if(v.passes()) {
   BookMapper.addBook(BookFactory.createFromFormData(data))
-  booksContainer.innerHTML = '' // forgetting this line will cause printing the updated books below the old books data
   BookFactory.renderBooks()
   modal.classList.add('hidden')
   

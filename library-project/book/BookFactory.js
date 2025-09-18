@@ -14,6 +14,7 @@ export class BookFactory {
     const booksContainer = document.querySelector('.books-container')
     const booksElements = books.map((book) => book.render())
     
+    booksContainer.innerHTML = ''
     booksContainer.append(...booksElements)
   }
 }
