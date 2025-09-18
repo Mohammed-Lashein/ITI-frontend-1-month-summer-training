@@ -26,13 +26,12 @@ export class Book {
     bookTitle.textContent = this.title
 
     const bookDescription = document.createElement('p')
-    // You need to change the book description to book author here and in the css file
-    bookDescription.className = 'book__description'
+    bookDescription.className = 'book__author' // this is just a class with no corresponding css styles.
+    // I am just adding that class to have declarative markup only
     bookDescription.textContent = this.author
 
     const bookPagesCount = document.createElement('p')
-    bookPagesCount.className = 'book__pages-count'
-    // maybe rename the class book__pages-count to book__pages-number
+    bookPagesCount.className = 'book__pages-number'
     bookPagesCount.textContent = this.pagesNumber
 
     const readStatusBtn = document.createElement('button')
