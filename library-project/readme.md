@@ -124,3 +124,54 @@ As a finale, I would like to quote from [mdn docs](https://developer.mozilla.org
 > The **spread** (...) syntax allows an iterable, such as an array or string, to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected. In an *object literal*, the spread syntax enumerates the properties of an object and adds the key-value pairs to the object being created.
 
 Notice how they explicitly mention that the behavior of spread operator works in **object literals**, not on passing an object as an argument to a function.
+_____
+### Functions hoisting, deep dive
+In this code snippet: 
+```js
+function getBookFormData() {
+  // I used them initially but thought about moving this mission to a dedicated function for better  reusablility
+  const bookTitle = document.querySelector("input[name='book_title']")
+  const bookAuthor = document.querySelector("input[name='book_author']")
+  const bookNumberOfPages = document.querySelector("input[name='book_pages_number']")
+  const isReadCheckbox = document.querySelector("input[name='is_read']")
+
+  const {bookTitleElement, bookAuthorElement, bookNumberOfPagesElement, isReadCheckboxElement} = getBookFormElements()
+
+  return {
+    title: bookTitleElement.value,
+    author: bookAuthorElement.value,
+    pagesNumber: bookNumberOfPagesElement.value,
+    isRead: isReadCheckboxElement.checked
+  }
+}
+
+function getBookFormElements() {
+  const bookTitle = document.querySelector("input[name='book_title']")
+  const bookAuthor = document.querySelector("input[name='book_author']")
+  const bookNumberOfPages = document.querySelector("input[name='book_pages_number']")
+  const isReadCheckbox = document.querySelector("input[name='is_read']")
+
+  return {
+    bookTitleElement: bookTitle,
+    bookAuthorElement: bookAuthor,
+    bookNumberOfPagesElement: bookNumberOfPages,
+    isReadCheckboxElement: isReadCheckbox,
+  }
+}
+```
+How does calling `getBookFormElements` within `getBookFormData` doesn't throw any errors?  
+I know that hoisting exists, but even with hoisting, `getBookFormData` would be declared above `getBookFormElements` so technically I shouldn't be able to call `getBookFormElements`.   
+
+=> I read about hoisting in [mdn docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_hoisting), but the example present there is not clear enough to address my question.  
+
+I asked claude, and he told me that **all** function declarations are hoisted to the top of the file before the execution starts. So when I call `getBookFormData`, `getBookFormElements` is already in memory and ready to be called.
+
+Does php have the same principle of function hoisting? I searched their docs but didn't find any mention of that keyword.  
+=> After reading [in the docs](https://www.php.net/manual/en/functions.user-defined.php) I found that they document the behavior but don't use the keyword *hoisting*.  
+I asked claude about so, he told me that php has different behavior from js where php: 
+1. **parses the entire file first** before executing any code
+2. **Registers all function definitions** during this initial parse
+3. **then executes** the code line by line
+
+Claude summarized: 
+> PHP doesn't "move" these functions to the top like JavaScript would. Instead, it knows about all functions before execution begins.
