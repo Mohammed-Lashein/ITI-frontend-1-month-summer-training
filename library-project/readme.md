@@ -13,6 +13,7 @@ I would say that I was bragging with adding real world structure to a small appl
   - [Using spread syntax in a method call](#using-spread-syntax-in-a-method-call)
   - [Functions hoisting, deep dive](#functions-hoisting-deep-dive)
   - [Switching back from react to vanilla js mindset](#switching-back-from-react-to-vanilla-js-mindset)
+  - [switching back from ... to ... grammatical sidenote](#grammatical-note-regarding-switching-back)
 
 ### Note 1 : ESM private scope
 In `modal.js` I declared a `form` constant to attach an event listener to it.
