@@ -6,7 +6,13 @@ I like the solution by [the amazing engineer michalosman](https://github.com/mic
 I was learning design patterns like factory and data mapper, so I tried to implement these.
 I would say that I was bragging with adding real world structure to a small application that won't need this separation of concerns at all, but consider it as an introduction to design patterns in a non-advanced way.
 
-## Project notes
+  ## Table of contents: 
+  - [Note 1 : ESM private scope](#note-1--esm-private-scope)
+  - [`generateBookId` function](#generatebookid-function)
+  - [`BookFactory` and `BookMapper` circular dependencies](#bookfactory-and-bookmapper-circular-dependencies)
+  - [Using spread syntax in a method call](#using-spread-syntax-in-a-method-call)
+  - [Functions hoisting, deep dive](#functions-hoisting-deep-dive)
+  - [Switching back from react to vanilla js mindset](#switching-back-from-react-to-vanilla-js-mindset)
 
 ### Note 1 : ESM private scope
 In `modal.js` I declared a `form` constant to attach an event listener to it.
