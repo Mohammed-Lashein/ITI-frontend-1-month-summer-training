@@ -15,6 +15,7 @@ I would say that I was bragging with adding real world structure to a small appl
   - [Switching back from react to vanilla js mindset](#switching-back-from-react-to-vanilla-js-mindset)
   - [switching back from ... to ... grammatical sidenote](#grammatical-note-regarding-switching-back)
   - [the return of `this` quirks](#the-return-of-this-quirks)
+  - [Sticky footer note](#create-a-sticky-footer)
 
 ### Note 1 : ESM private scope
 In `modal.js` I declared a `form` constant to attach an event listener to it.
@@ -304,3 +305,11 @@ class Book {
 }
 ```
 Now on calling `Book.remove()` in response to the `click` event, it will refer to the `Book` instance not the `button` element.
+_____
+### Create a sticky footer
+In my first attempt to create the footer, it was directly beneath the `div.books-container`, and when more content was added it was pushed with it.  
+
+This isn't the kind of a good design. I inspected the source code from github and found the styles that the developer michalosman added.  
+
+I wanted to learn more about these, so I searched online about how to create a sticky footer.
+I found [this question on stackoverflow](https://stackoverflow.com/questions/29069498/how-to-make-a-sticky-footer-using-css) which has exactly the same code used in this project.
