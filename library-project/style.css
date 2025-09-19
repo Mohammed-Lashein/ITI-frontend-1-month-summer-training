@@ -82,6 +82,7 @@ button.add-book {
   font-size: 18px;
   /* display: none; */
   background-color: rgba(0, 0, 0, 0.3);
+  text-align: center; /*This rule is important since we moved the modal outside of section.add-book-container*/
 }
 
 .modal-overlay {
