@@ -1,8 +1,37 @@
+import { useRef, useState } from 'react'
+
 function AddBookForm() {
+	const [bookTitle, setBookTitle] = useState('')
+	const [bookAuthor, setBookAuthor] = useState('')
+	const [bookPagesNumber, setBookPagesNumber] = useState(0)
+	const [isRead, setIsRead] = useState(false)
+
+	const bookTitleRef = useRef(null)
+	const bookAuthorRef = useRef(null)
+	const bookPagesNumberRef = useRef(null)
+	const isBookReadRef = useRef(null)
+	function handleSubmission(e) {
+		e.preventDefault()
+
+		setBookTitle(bookTitleRef.current.value)
+		setBookAuthor(bookAuthorRef.current.value)
+		setBookPagesNumber(bookPagesNumberRef.current.value)
+		setIsRead(isBookReadRef.current.checked)
+
+		const aFieldIsEmpty = bookTitle === '' || bookAuthor === '' || bookPagesNumber === 0
+		if (aFieldIsEmpty) {
+			console.log('All fields are required') // the bookPagesNumber should be greater than zero, but let's
+			// keep that for a later better validation approach
+			return
+		}
+
+		console.log('end of fn reached!')
+	}
 	return (
 		<form
 			action=''
 			className='add-new-book-form-container'
+			onSubmit={handleSubmission}
 		>
 			<header>Add new book</header>
 			<div className='form-group'>
@@ -10,6 +39,7 @@ function AddBookForm() {
 					type='text'
 					name='book_title'
 					placeholder='Title'
+					ref={bookTitleRef}
 				/>
 			</div>
 
@@ -18,6 +48,7 @@ function AddBookForm() {
 					type='text'
 					name='book_author'
 					placeholder='Author'
+					ref={bookAuthorRef}
 				/>
 			</div>
 
@@ -27,6 +58,7 @@ function AddBookForm() {
 					name='book_pages_number'
 					maxLength='1000'
 					placeholder='Number of Pages'
+					ref={bookPagesNumberRef}
 				/>
 			</div>
 
@@ -36,6 +68,7 @@ function AddBookForm() {
 					type='checkbox'
 					name='is_read'
 					id='is_read'
+					ref={isBookReadRef}
 				/>
 			</div>
 
