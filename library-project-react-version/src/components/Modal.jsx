@@ -1,8 +1,15 @@
 function Modal({ isOpen, setIsOpen }) {
+	function closeModal(e) {
+    if(e.target === e.currentTarget) {
+			// e.target => The element that we clicked
+			// e.currentTarget => The element that is assigned the *current* onClick handler
+      setIsOpen(false)
+		}
+    }
 	return (
 		<>
 			{isOpen && (
-				<div className='modal'>
+				<div className='modal' onClick={(e) => closeModal(e)}>
 					<form
 						action=''
 						className='add-new-book-form-container'
