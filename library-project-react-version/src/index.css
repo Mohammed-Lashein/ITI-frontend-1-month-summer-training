@@ -82,6 +82,7 @@ button.add-book {
   font-size: 18px;
   /* display: none; */
   background-color: rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
 .modal-overlay {
