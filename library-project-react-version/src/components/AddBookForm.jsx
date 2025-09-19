@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { bookIdGenerator } from '../utils'
 
 function AddBookForm() {
 	const [bookTitle, setBookTitle] = useState('')
@@ -26,6 +27,22 @@ function AddBookForm() {
 		}
 
 		console.log('end of fn reached!')
+
+		// update data source with data
+		const book = {
+			id: bookIdGenerator(),
+			title: bookTitle,
+			author: bookAuthor,
+			pagesNumber: bookPagesNumber,
+			isRead: isRead,
+		}
+		updateDataSource(book)
+		// update books state to trigger a re-render. Deferred till we lift the state up
+	}
+	function updateDataSource(book) {
+		const books = JSON.parse(sessionStorage.getItem('books')) || []
+		const updatedBooks = books.concat(book)
+		sessionStorage.setItem('books', JSON.stringify(updatedBooks))
 	}
 	return (
 		<form
