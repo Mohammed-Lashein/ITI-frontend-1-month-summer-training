@@ -11,6 +11,7 @@ I like that now we have one project idea, but with 2 different implementations.
 - [Explaining a sentence from vite docs](#explaining-a-sentence-from-vite-docs)
 - [Explanation for or to?](#explanation-for-or-to)
 - [Regarding `FormValidator` class](#regarding-formvalidator-class)
+- [Claude's complement](#claudes-complement)
 
 ### Closing the Modal note
 In the `Modal` component, I wanted to add the feature of closing the `Modal` on clicking outside of it.
@@ -91,3 +92,6 @@ ____
 I want to re-implement the `FormValidator` class in the vanilla js project here. But since time is not on my side, and since the implementation of that class is tightly coupled to the form in the vanilla js version of the project, I will not be making any validation here.
 
 Maybe later, I will use the [validatorjs library](https://github.com/mikeerickson/validatorjs) to train on using it. But for now, I will depend on manual checks to avoid creating empty book entries
+_____
+### Claude's complement
+When I told claude that I was skeptic about scattering data source logic in multiple `useEffect`s in the components. He agreed that centralizing data logic is important, and he made a [nice complement](./src/design/claude-encouragement.png) that emphasized the importance for any developer to learn design patterns.
