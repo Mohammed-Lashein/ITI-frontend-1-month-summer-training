@@ -5,13 +5,20 @@ import Modal from './components/Modal'
 import Navbar from './components/Navbar'
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+	const [isModalOpen, setIsModalOpen] = useState(false)
 	return (
 		<div>
 			<Navbar />
-      <AddBookButton setIsModalOpen={setIsModalOpen}/>
-      <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}/>
-			<Footer />
+			<main>
+				<div className='main-container'>
+					<AddBookButton setIsModalOpen={setIsModalOpen} />
+					<Modal
+						isOpen={isModalOpen}
+						setIsOpen={setIsModalOpen}
+					/>
+					<Footer />
+				</div>
+			</main>
 		</div>
 	)
 }
