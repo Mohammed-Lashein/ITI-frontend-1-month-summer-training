@@ -1,6 +1,9 @@
 function Navbar() {
-  return (
-    <div>Navbar</div>
-  )
+	return (
+		<nav>
+			<header>Library</header>
+			<button className='login'>Log In</button>
+		</nav>
+	)
 }
 export default Navbar
