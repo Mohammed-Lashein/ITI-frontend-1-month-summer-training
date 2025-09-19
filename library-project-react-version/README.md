@@ -9,6 +9,7 @@ I like that now we have one project idea, but with 2 different implementations.
 - [Closing the modal note](#closing-the-modal-note)
 - [imports without a file extension](#imports-wonders)
 - [Explaining a sentence from vite docs](#explaining-a-sentence-from-vite-docs)
+- [Explanation for or to?](#explanation-for-or-to)
 
 ### Closing the Modal note
 In the `Modal` component, I wanted to add the feature of closing the `Modal` on clicking outside of it.
@@ -80,3 +81,7 @@ import YummyMeal from './YummyMeal.vue'
 I don't have syntax highlighting in the IDE without the vue extension enabled because `.vue` is a custom extension specific to a framework.
 
 Notice that also in the imports, I am specifying the file extension `.vue`
+_____
+### Explanation for or to?
+- Explanation to someone
+- Explanation for something
