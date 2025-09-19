@@ -1,12 +1,12 @@
 function Modal() {
 	return (
-		<div class='modal hidden'>
+		<div className='modal hidden'>
 			<form
 				action=''
-				class='add-new-book-form-container'
+				className='add-new-book-form-container'
 			>
 				<header>Add new book</header>
-				<div class='form-group'>
+				<div className='form-group'>
 					<input
 						type='text'
 						name='book_title'
@@ -14,23 +14,23 @@ function Modal() {
 					/>
 				</div>
 
-				<div class='form-group'>
+				<div className='form-group'>
 					<input
 						type='text'
 						name='book_author'
 						placeholder='Author'
 					/>
 				</div>
-				<div class='form-group'>
+				<div className='form-group'>
 					<input
 						type='number'
 						name='book_pages_number'
-						maxlength='1000'
+						maxLength='1000'
 						placeholder='Number of Pages'
 					/>
 				</div>
-				<div class='form-group'>
-					<label for='is_read'>Have you read it?</label>
+				<div className='form-group'>
+					<label htmlFor='is_read'>Have you read it?</label>
 					<input
 						type='checkbox'
 						name='is_read'
@@ -40,7 +40,7 @@ function Modal() {
 				<input
 					type='submit'
 					value='Submit'
-					class='btn btn-light-green'
+					className='btn btn-light-green'
 				/>
 			</form>
 		</div>
