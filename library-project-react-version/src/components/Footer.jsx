@@ -1,6 +1,4 @@
 function Footer() {
-  return (
-    <div>Footer</div>
-  )
+	return <footer>Copyright &copy; {new Date().getFullYear()} michalosman at github</footer>
 }
 export default Footer
