@@ -8,6 +8,7 @@ I like that now we have one project idea, but with 2 different implementations.
 ## Table of contents
 - [Closing the modal note](#closing-the-modal-note)
 - [imports without a file extension](#imports-wonders)
+- [Explaining a sentence from vite docs](#explaining-a-sentence-from-vite-docs)
 
 ### Closing the Modal note
 In the `Modal` component, I wanted to add the feature of closing the `Modal` on clicking outside of it.
@@ -59,3 +60,23 @@ export default defineConfig({
 })
 ```
 Vite even has a dedicated section [in their docs](https://vite.dev/config/shared-options.html#resolve-extensions) regarding `resolve.extensions`
+____
+### Explaining a sentence from vite docs
+If you followed the above link to vite docs, you will find a bit unclear sentence: 
+> Note it is **NOT** recommended to omit extensions for custom import types (e.g. `.vue`) since it can interfere with IDE and type support.
+
+If `.vue` were a custom extension, what are non-custom extensions then?  
+After asking claude, he told me that extensions like `.js`, `.ts`, `.jsx` and `.tsx` are known to the js tools that are used in the IDEs, but extensions like `.vue` or even `.svelte` each is specific to its own framework. That's why the latter extensions need compilers specific to their frameworks to turn the code into understandable js by the IDE.
+
+I even inspected a piece of code from my notes on learning from **vue masterclass 2024** (which I studied in their free weekend): 
+```vue
+<script setup>
+import { reactive, ref, watch, provide, onMounted } from 'vue'
+import BigYellowUsername from './BigYellowUsername.vue'
+import YummyMeal from './YummyMeal.vue'
+</script>
+```
+
+I don't have syntax highlighting in the IDE without the vue extension enabled because `.vue` is a custom extension specific to a framework.
+
+Notice that also in the imports, I am specifying the file extension `.vue`
