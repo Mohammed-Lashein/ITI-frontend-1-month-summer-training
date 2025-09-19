@@ -9,7 +9,7 @@ function App() {
 	return (
 		<div>
 			<Navbar />
-      <AddBookButton />
+      <AddBookButton setIsModalOpen={setIsModalOpen}/>
       <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}/>
 			<Footer />
 		</div>
