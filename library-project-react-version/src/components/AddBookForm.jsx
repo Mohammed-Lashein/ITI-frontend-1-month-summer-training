@@ -37,11 +37,6 @@ function AddBookForm({setIsModalOpen, addBook}) {
 		setIsModalOpen(false)
 
 	}
-	function updateDataSource(book) {
-		const books = JSON.parse(sessionStorage.getItem('books')) || []
-		const updatedBooks = books.concat(book)
-		sessionStorage.setItem('books', JSON.stringify(updatedBooks))
-	}
 	return (
 		<form
 			action=''
