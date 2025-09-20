@@ -140,7 +140,7 @@ I personally haven't tried react query before ( I know I should have tried it ea
 3. Use state management library like Redux (No need for it in this simple application)
 ____
 ### Should we use `BookFactory` or are we abstracting early?  
-In the `AddBookForm`, we manually constructed the `book` object, not a `Book` instance,  that got passed to `updateDataSource()`, but I think we are tightly coupling `AddBookForm` to the logic. I think it is not from the responsiblity of `AddBookForm` to know how to create a book object, especially id generation part.
+In the `AddBookForm`, we manually constructed the `book` object, not a `Book` instance,  that got passed to `updateDataSource()`, but this tightly couples `AddBookForm` to the business logic. It shouldn't be the responsibility of `AddBookForm` to know how to construct a book, especially id generation part.
 
-Should I call `BookFactory` in the component then pass the data to `addBook()` coming from `useBooks()` hook?  
-After asking claude, he suggested calling `BookFactory` in `addBook()` function in `useBooks()` hook. Doing so will allow our `AddBookForm` component to pass the book data to the  `addBook()` function without exposing any functionality to the component (thus creating better interfaces, not the OOP `interface`, but I mean the each function's defined entry points for client code interaction)
+Should I call `BookFactory` in the component and then pass the book instance to `addBook()` coming from `useBooks()` hook?  
+After asking claude, he suggested calling `BookFactory` in `addBook()` function in `useBooks()` hook.This approach allows the `AddBookForm` component to pass raw form data to the `addBook()` function without exposing book construction logic to the componentt (thus creating better interfaces, not the OOP `interface`, but I mean each function's defined entry points for client code interaction)
