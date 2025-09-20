@@ -1,6 +1,6 @@
 import AddBookForm from './AddBookForm'
 
-function Modal({ isOpen, setIsOpen }) {
+function Modal({ isOpen, setIsOpen, addBook }) {
 	function closeModal(e) {
     if(e.target === e.currentTarget) {
 			// e.target => The element that we clicked
@@ -12,7 +12,7 @@ function Modal({ isOpen, setIsOpen }) {
 		<>
 			{isOpen && (
 				<div className='modal' onClick={(e) => closeModal(e)}>
-					<AddBookForm />
+					<AddBookForm setIsModalOpen={setIsOpen} addBook={addBook}/>
 				</div>
 			)}
 		</>
