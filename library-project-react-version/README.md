@@ -14,6 +14,7 @@ I like that now we have one project idea, but with 2 different implementations.
 - [Claude's complement](#claudes-complement)
 - [Tedious state updates](#tedious-state-updates)
 - [Should we use `BookFactory` or are we abstracting early?](#should-we-use-bookfactory-or-are-we-abstracting-early)
+- [React custom hooks important note](#react-custom-hooks-important-note)
 
 ### Closing the Modal note
 In the `Modal` component, I wanted to add the feature of closing the `Modal` on clicking outside of it.
@@ -144,3 +145,70 @@ In the `AddBookForm`, we manually constructed the `book` object, not a `Book` in
 
 Should I call `BookFactory` in the component and then pass the book instance to `addBook()` coming from `useBooks()` hook?  
 After asking claude, he suggested calling `BookFactory` in `addBook()` function in `useBooks()` hook.This approach allows the `AddBookForm` component to pass raw form data to the `addBook()` function without exposing book construction logic to the componentt (thus creating better interfaces, not the OOP `interface`, but I mean each function's defined entry points for client code interaction)
+____
+### React custom hooks important note
+I didn't want to clutter the git history of the project with bad code, so I experimented with some code that I will provide here as a reference.
+```jsx
+// AddBookForm.jsx
+import { useRef} from 'react'
+import { useBooks } from '../hooks/useBooks'
+
+function AddBookForm({setIsModalOpen, addBook}) {
+	const {addBook} = useBooks()
+
+	const bookTitleRef = useRef(null)
+	const bookAuthorRef = useRef(null)
+	const bookPagesNumberRef = useRef(null)
+	const isBookReadRef = useRef(null)
+	
+	function handleSubmission(e) {
+		e.preventDefault()
+
+		const aFieldIsEmpty = bookTitleRef.current.value === '' || bookAuthorRef.current.value === '' || bookPagesNumberRef.current.value === 0
+		if (aFieldIsEmpty) {
+			console.log('All fields are required') // the bookPagesNumber should be greater than zero, but let's
+			// keep that for a later better validation approach
+			return
+		}
+
+		console.log('end of fn reached!')
+
+		const formElementsValues = {
+			title: bookTitleRef.current.value,
+			author: bookAuthorRef.current.value,
+			pagesNumber: bookPagesNumberRef.current.value,
+			isRead: isBookReadRef.current.checked,
+		}
+    // Notice we are calling addBook here
+		addBook(formElementsValues)
+		setIsModalOpen(false)
+	}
+}
+export default AddBookForm
+```
+```jsx
+import Book from './Book'
+import { useBooks } from '../hooks/useBooks'
+
+function Books() {
+  const {books} = useBooks() // 2nd call to our custom hook!
+	return <section className='books-container'>
+    {books.map((book) => <Book book={book} key={book.id}/>)}
+  </section>
+}
+export default Books
+```
+Notice that we called `useBooks` hook in 2 places, so each one will have a separate copy of the state. That's why when we updated the data source (`sessionStorage` in my code), the `Books` component didn't reflect that update in the state, because it was accessing another copy of the state returned from the 2nd call to `useBooks()`.  
+
+The solution?  
+We need to lift the state up.  
+The next paragraph from the docs summarizes that.  
+
+Long story short, that quote from [react docs](https://react.dev/learn/reusing-logic-with-custom-hooks#custom-hooks-let-you-share-stateful-logic-not-state-itself) is the key: 
+> Custom Hooks let you share stateful logic but not state itself. Each call to a Hook is **completely independent** from every other call to the same Hook. This is why the two sandboxes above are completely equivalent. If you’d like, scroll back up and compare them. The behavior before and after extracting a custom Hook is identical.
+> When you need to share the state itself between multiple components, [lift it up and pass it down](https://react.dev/learn/sharing-state-between-components) instead.
+
+All of the headache I had was due to thinking that custom hooks allow me to share the state ❌  
+I wanted the `books` state to be shared between hook calls in both the `Books` component and the `AddBookForm` component.
+
+The problem is that my assumption about the behavior of the custom hooks caused my app to behave in a very odd way (The data source was updated, but the `books` state had a different value in each component)
