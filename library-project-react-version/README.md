@@ -12,6 +12,7 @@ I like that now we have one project idea, but with 2 different implementations.
 - [Explanation for or to?](#explanation-for-or-to)
 - [Regarding `FormValidator` class](#regarding-formvalidator-class)
 - [Claude's complement](#claudes-complement)
+- [Tedious state updates](#tedious-state-updates)
 
 ### Closing the Modal note
 In the `Modal` component, I wanted to add the feature of closing the `Modal` on clicking outside of it.
@@ -95,3 +96,44 @@ Maybe later, I will use the [validatorjs library](https://github.com/mikeerickso
 _____
 ### Claude's complement
 When I told claude that I was skeptic about scattering data source logic in multiple `useEffect`s in the components. He agreed that centralizing data logic is important, and he made a [nice complement](./src/design/claude-encouragement.png) that emphasized the importance for any developer to learn design patterns.
+____
+### Tedious state updates
+Now we will use the `DataMapper` to abstract all of the data logic, but now we will need to synchronize the state with the data source updates.  
+
+In the vanilla js project, we just update the data source and re-render the books: 
+```js
+// In Book class
+  toggleReadStatus() {
+    // get the book with the target id
+    const books = BookMapper.getBooks()
+    // get the books from data source + toggle the book read status
+    const updatedBooks = books.map((book) => {
+      if(book.id === this.id) {
+        book.isRead = !book.isRead
+      }
+      return book
+    })
+    // update data source
+    BookMapper.updateBooks(updatedBooks)
+    // re-render books
+    BookFactory.renderBooks()
+  }
+```
+But now we need to synchronize the state with the data source updates. Isn't this frustrating?  
+Claude agreed that this is frustrating, and suggested some solutions: 
+1. Use React Query (which handles both data source and state updates automatically)
+I personally haven't tried react query before ( I know I should have tried it earlier), so I won't consider this an option.
+1. abstract that logic in a hook (Recommended)
+```js
+  export function useBooks() {
+    const [books, setBooks] = useState([])
+    const addBook = (bookData) => {
+      const book = BookFactory.createFromFormData(bookData)
+      BookMapper.addBook(book) // update data source
+      setBooks(prev => ({...prev, book})) // update react state
+    }
+
+    return {books, addBook}
+  }
+```
+3. Use state management library like Redux (No need for it in this simple application)
