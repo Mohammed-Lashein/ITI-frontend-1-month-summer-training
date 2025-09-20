@@ -1,8 +1,9 @@
 import { BookMapper } from '../utils/BookMapper';
-function Book({book: {id, title, author, pagesNumber, isRead}}) {
+function Book({setBooks, book: {id, title, author, pagesNumber, isRead}}) {
 	function removeBook(id) {
 		const books = BookMapper.getBooks()
 		const updatedBooks = books.filter((book) => book.id !== id)
+		setBooks(updatedBooks)
 		BookMapper.updateBooks(updatedBooks)
 	}
 	return (
