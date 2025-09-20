@@ -21,5 +21,5 @@ export function useBooks() {
 		const bookObj = BookMapper.toStorage(book) // get a book object not a Book instance
 		setBooks((prev) => [...prev, bookObj])
 	}
-	return { books, addBook }
+	return { books, addBook, setBooks }
 }
