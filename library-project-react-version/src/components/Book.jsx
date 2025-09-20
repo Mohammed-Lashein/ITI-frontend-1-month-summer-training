@@ -1,4 +1,4 @@
-function Book({title, author, pagesNumber, isRead}) {
+function Book({book: {title, author, pagesNumber, isRead}}) {
 	return (
 		<article className='book'>
 			<p className='book__title'>{title}</p>
