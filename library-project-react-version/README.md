@@ -130,7 +130,7 @@ I personally haven't tried react query before ( I know I should have tried it ea
     const addBook = (bookData) => {
       const book = BookFactory.createFromFormData(bookData)
       BookMapper.addBook(book) // update data source
-      setBooks(prev => ({...prev, book})) // update react state
+      setBooks(prev => [...prev, book]) // update react state
     }
 
     return {books, addBook}
