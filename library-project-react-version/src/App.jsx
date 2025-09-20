@@ -8,7 +8,7 @@ import { useBooks } from './hooks/useBooks'
 
 function App() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
-	const {books, addBook} = useBooks()
+	const {books, addBook, setBooks} = useBooks()
 	return (
 		<div>
 			<Navbar />
@@ -20,7 +20,7 @@ function App() {
 						setIsOpen={setIsModalOpen}
 						addBook={addBook}
 					/>
-					<Books books={books}/>
+					<Books books={books} setBooks={setBooks}/>
 					<Footer />
 				</div>
 			</main>
