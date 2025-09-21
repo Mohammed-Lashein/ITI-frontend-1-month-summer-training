@@ -1,26 +1,4 @@
-import { BookMapper } from '../utils/BookMapper';
-function Book({setBooks, book: {id, title, author, pagesNumber, isRead}}) {
-	function removeBook(id) {
-		const books = BookMapper.getBooks()
-		const updatedBooks = books.filter((book) => book.id !== id)
-		setBooks(updatedBooks)
-		BookMapper.updateBooks(updatedBooks)
-	}
-	function toggleReadStatus(bookId) {
-		console.log('this is bookId', bookId)
-		const books = BookMapper.getBooks() 
-		const updatedBooks = books.map((book) => {
-			if(book.id === bookId) {
-				return {
-					...BookMapper.toStorage(book),
-					isRead: !book.isRead
-				}
-			}
-			return BookMapper.toStorage(book)
-		})
-		setBooks(updatedBooks)
-		BookMapper.updateBooks(updatedBooks)
-	}
+function Book({ book: {id, title, author, pagesNumber, isRead}, removeBook, toggleReadStatus}) {
 	return (
 		<article className='book'>
 			<p className='book__title'>{title}</p>
