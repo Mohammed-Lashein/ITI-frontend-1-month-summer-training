@@ -12,11 +12,11 @@ function Book({setBooks, book: {id, title, author, pagesNumber, isRead}}) {
 		const updatedBooks = books.map((book) => {
 			if(book.id === bookId) {
 				return {
-					...book,
+					...BookMapper.toStorage(book),
 					isRead: !book.isRead
 				}
 			}
-			return book
+			return BookMapper.toStorage(book)
 		})
 		setBooks(updatedBooks)
 		BookMapper.updateBooks(updatedBooks)
