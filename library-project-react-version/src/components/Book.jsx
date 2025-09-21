@@ -8,7 +8,7 @@ function Book({setBooks, book: {id, title, author, pagesNumber, isRead}}) {
 	}
 	function toggleReadStatus(bookId) {
 		console.log('this is bookId', bookId)
-		const books = BookMapper.getBooks() // You are creating new books! This is wrong in React. Stick to the state
+		const books = BookMapper.getBooks() 
 		const updatedBooks = books.map((book) => {
 			if(book.id === bookId) {
 				return {
