@@ -7,25 +7,25 @@ import Books from './components/Books'
 import { useBooks } from './hooks/useBooks'
 
 function App() {
-	const [isModalOpen, setIsModalOpen] = useState(false)
-	const {books, addBook, setBooks} = useBooks()
-	return (
-		<div>
-			<Navbar />
-			<main>
-				<div className='main-container'>
-					<AddBookButton setIsModalOpen={setIsModalOpen} />
-					<Modal
-						isOpen={isModalOpen}
-						setIsOpen={setIsModalOpen}
-						addBook={addBook}
-					/>
-					<Books books={books} setBooks={setBooks}/>
-					<Footer />
-				</div>
-			</main>
-		</div>
-	)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const {books, addBook, setBooks} = useBooks()
+  return (
+    <div>
+      <Navbar />
+      <main>
+        <div className='main-container'>
+          <AddBookButton setIsModalOpen={setIsModalOpen} />
+          <Modal
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+            addBook={addBook}
+          />
+          <Books books={books} setBooks={setBooks}/>
+          <Footer />
+        </div>
+      </main>
+    </div>
+  )
 }
 
 export default App
