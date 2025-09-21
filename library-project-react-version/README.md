@@ -15,6 +15,7 @@ I like that now we have one project idea, but with 2 different implementations.
 - [Tedious state updates](#tedious-state-updates)
 - [Should we use `BookFactory` or are we abstracting early?](#should-we-use-bookfactory-or-are-we-abstracting-early)
 - [React custom hooks important note](#react-custom-hooks-important-note)
+- [Why is the book id deleted on toggling read status?](#why-is-the-book-id-deleted-on-toggling-read-status)
 
 ### Closing the Modal note
 In the `Modal` component, I wanted to add the feature of closing the `Modal` on clicking outside of it.
@@ -212,3 +213,143 @@ All of the headache I had was due to thinking that custom hooks allow me to shar
 I wanted the `books` state to be shared between hook calls in both the `Books` component and the `AddBookForm` component.
 
 The problem is that my assumption about the behavior of the custom hooks caused my app to behave in a very odd way (The data source was updated, but the `books` state had a different value in each component)
+_____
+### Why is the book id deleted on toggling read status?
+Given this Book component
+```jsx
+// Book.jsx
+import { BookMapper } from '../utils/BookMapper';
+function Book({setBooks, book: {id, title, author, pagesNumber, isRead}}) {
+	function removeBook(id) {
+		const books = BookMapper.getBooks()
+		const updatedBooks = books.filter((book) => book.id !== id)
+		setBooks(updatedBooks)
+		BookMapper.updateBooks(updatedBooks)
+	}
+	function toggleReadStatus(bookId) {
+		const books = BookMapper.getBooks() 
+		const updatedBooks = books.map((book) => {
+			if(book.id === bookId) {
+				return {
+					...book,
+					isRead: !book.isRead
+				}
+			}
+			return book
+		})
+		setBooks(updatedBooks)
+		BookMapper.updateBooks(updatedBooks)
+	}
+	return (
+		<article className='book'>
+			<p className='book__title'>{title}</p>
+			<p className='book__author'>{author}</p>
+			<p className='book__pages-number'>{pagesNumber}</p>
+			<button className={`btn ${isRead ? 'btn-light-green' : 'btn-light-red'}`} onClick={() => toggleReadStatus(id)}>{isRead ? 'Read' : 'Not Read'}</button>
+			<button className='btn' onClick={() => removeBook(id)}>Remove</button>
+		</article>
+	)
+}
+export default Book
+```
+on toggling book status, The toggled book id disappears. I thought this is because I was getting the data from `sessionStorage` by calling `BookMapper.getBooks()` instead of mapping over the `books` state. But after careful thinking about the code and reading in react docs, this doesn't seem to cause any problems.
+
+Is the problem with `BookMapper.getBooks()`?
+```js
+class BookMapper {
+  // unused methods in our context are removed for brevity
+  static fromStorage({id, title, author, pagesNumber, isRead}) {
+      return new Book(id, title, author, pagesNumber, isRead)
+    }
+  static getBooks() {
+    const books = JSON.parse(sessionStorage.getItem('books')) || []
+    const booksInstances = books.map((book) => BookMapper.fromStorage(book))
+    return booksInstances
+  }
+}
+```
+I thought the problem was with returning a `Book` instance instead of a normal object, so I logged each `Book` instance to the console: 
+```jsx
+// Book.jsx
+  	function toggleReadStatus(bookId) {
+      // logging code
+		console.log('this is bookId', bookId)
+
+		const books = BookMapper.getBooks() 
+		const updatedBooks = books.map((book) => {
+
+      // logging code
+			console.log(book)
+			console.log(book.id)
+
+			if(book.id === bookId) {
+				return {
+					...book,
+					isRead: !book.isRead
+				}
+			}
+			return book
+		})
+		setBooks(updatedBooks)
+		BookMapper.updateBooks(updatedBooks)
+	}
+```
+But the logged books had `#id`, which is a private property.
+No problem with that, I am having a getter and it is logging a correct id for each book instance.  
+
+Where is the problem then? 🤔  
+I haven't asked any LLM and thankfully I have figured it out.  
+Yes we have a getter that will return to us the `Book` instance id when we ask for it, but we **don't have a property called `id` that is accessible on the instance**.  
+So when we update the array of `books`, we are updating that specific book `isRead` status, but we are deleting the id that was pre-assigned to it initially!  
+
+That was the cause of the quirky behavior I saw and the inconsistent state updates, along with react yelling at me saying that `Each child should have a unique "key" prop`.
+
+I have been using react for almost 2 years, and this is the first time I encounter this odd situation! 
+Maybe because I am integrating OOP with React, and this is my first time to try the `DataMapper` design pattern in a react project.
+
+The piece of knowledge I was missing is that there are 2 types of class properties in js: 
+1. Data properties: They exist in the class and hold data
+2. Accessor properties: They are not actual properties of the class, but instead functions that get called when we try to access them on an instance (note that getters are accessed as normal propreties as if the property exists on the instance, although they are declared as functions)
+
+What are our solutions? 
+1. Call `BookMapper.toStorage()` before spreading the `book` instance: 
+```jsx
+// Book.jsx
+	function toggleReadStatus(bookId) {
+		const books = BookMapper.getBooks()
+		const updatedBooks = books.map((book) => {
+			if(book.id === bookId) {
+				return {
+					...BookMapper.toStorage(book),
+					isRead: !book.isRead
+				}
+			}
+			return BookMapper.toStorage(book)
+		})
+		setBooks(updatedBooks)
+		BookMapper.updateBooks(updatedBooks)
+	}
+```
+2. Manually extract the id: 
+```jsx
+// Book.jsx
+	function toggleReadStatus(bookId) {
+		const books = BookMapper.getBooks()
+		const updatedBooks = books.map((book) => {
+			if(book.id === bookId) {
+				return {
+					...book,
+          id: book.id,
+					isRead: !book.isRead
+				}
+			}
+			return {
+        ...book,
+        id: book.id
+      }
+		})
+		setBooks(updatedBooks)
+		BookMapper.updateBooks(updatedBooks)
+	}
+```
+I think the 1st solution is more elegant, but it will require a comment since `BookMapper.toStorage()` is supposed to get called on books storage in a data source, not in state update.
