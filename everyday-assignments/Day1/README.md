@@ -18,3 +18,8 @@ What about using `h3`, `h4`, ...etc but style them as an `h2`?
 Since most of the headings in this page have consistent format and importance (a heading for each section), semantically using different heading types is not good.  
 
 I may search about the accessiblity and the effect on SEO of such approaches.
+____
+### How to add a favicon to your website?  
+W3schools has a [nice article](https://www.w3schools.com/html/html_favicon.asp) about this topic.  
+
+Also, the website they mentioned for favicons, you can upload any image you want and the website will automatically convert it to a favicon.  
