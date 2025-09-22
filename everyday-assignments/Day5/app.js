@@ -217,3 +217,101 @@ console.log(convertTo12HourFormat(hour))
 const timeConverterBtn = document.querySelector(".time-converter")
 timeConverterBtn.addEventListener('click', showHourConversionModal)
 // console.log(convertTo12HourFormat(hour))
+
+// 7. 
+function upperCaseFirstLetter(string) {
+  let firstLetterUppercased = string[0].toUpperCase()
+  let stringWithFirstLetterUppercased = firstLetterUppercased + string.slice(1)
+  return stringWithFirstLetterUppercased
+}
+// 8. Favorite color 
+const favoriteColorModalBtn = document.querySelector('.favorite-color')
+favoriteColorModalBtn.addEventListener('click', showFavoriteColorModal)
+function showFavoriteColorModal() {
+  while(true) {
+    // prompt the user to type their favorite color
+    const favColor = prompt('Type your favorite color')
+    // get that fav color and ask it in a confirm
+    const confirmChoice = confirm("Do you confirm your choice: " + favColor + "?")
+    // if the user confirmed, alert the chosen color
+    if(confirmChoice) {
+      alert("Your chosen fav color is: " + favColor)
+      break
+    } else {
+      console.log("Let's try again")
+      continue
+    }
+    // if cancelled, display let's try again (maybe the loop trick will be used again)
+  }
+}
+
+// 9. Prompt the user to enter a password
+const passwordPromptBtn = document.querySelector('.show-password-prompt')
+function showPasswordPrompt() {
+  while(true) {
+    const password = prompt("Enter your password: ")
+    if(password) {
+      console.log("Thanks for entering your password")
+      break
+    } else {
+      continue
+    }
+  }
+} 
+passwordPromptBtn.addEventListener('click', showPasswordPrompt)
+
+// 10. date comparison. With Claude help
+const firstDate = new Date('2024-05-05').getTime()
+const secondDate = new Date('2025-05-05').getTime()
+
+console.log(secondDate > firstDate)
+
+// 11. calc number of days between two given dates
+function calculateDaysBetween(earlierDate, latterDate) {
+  // declare the dates
+  // get their timestamps
+  const timestamp1 = earlierDate.getTime()
+  const timestamp2 = latterDate.getTime()
+
+  // calculate the difference between timestamps
+  const timestampsDifference = timestamp2 - timestamp1
+  // calculate amount of ms in a day
+  const millisecondsInADay = 24 * 60 * 60 * 1000
+  // 24hrs in a day * 60mins in an hour * 60seconds in a minute * 1000 milliseconds in a second
+
+  // Last step, divide the timestamps difference by the amount of ms in a day
+  const daysInBetween = Math.floor(timestampsDifference / millisecondsInADay)
+  return daysInBetween
+}
+// console.log(calculateDaysBetween(new Date('2024-05-05'), new Date('2024-05-06')))
+
+// 12. calculateSumOfEvenNumbersBetween(min, max)
+function calculateSumOfEvenNumbersBetween(min, max) {
+  let sumOfEvenNumbers = 0
+  for(let i = min; i < max; i++) {
+    if(i % 2 === 0) {
+      // even number
+      sumOfEvenNumbers += i 
+    }
+  }
+  return sumOfEvenNumbers
+}
+// console.log(calculateSumOfEvenNumbersBetween(1, 5)) // 6
+
+// 13. extract "World"
+console.log("Hello World!".slice(6, 11))
+
+// 14. round number
+console.log(Math.round(5.678))
+
+// 15. Divisible by both 3 and 5 
+function isDivisibleByBoth3And5(number) {
+  if(number % 3 === 0 && number % 5 === 0) {
+    return true
+  } else {
+    return false
+  }
+}
+// console.log(isDivisibleByBoth3And5(30)) // true
+// console.log(isDivisibleByBoth3And5(15)) // true
+// console.log(isDivisibleByBoth3And5(12)) // false
