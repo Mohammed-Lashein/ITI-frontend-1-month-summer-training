@@ -114,7 +114,7 @@ confirmModalBtn.addEventListener('click', showConfirmModal)
 var num = 10
 num % 2 === 0 ? console.log('hi') : console.log('hello')
 
-// 4
+// 4. User age
 const ageModal = document.querySelector('.show-age-modal')
 function handleUserAge() {
 	while (true) {
@@ -136,7 +136,7 @@ function handleUserAge() {
 			continue
 		}
 
-		switch (ageInNumber) {
+		switch (true) {
 			case (ageInNumber > 1 && ageInNumber <= 10):
 				console.log('child')
 				break
@@ -153,6 +153,11 @@ function handleUserAge() {
       console.log('wrong age value')
       break
 		}
+    /* 
+      If we reached here, then the user has entered a correct age value,
+      then break from the while loop
+    */
+    break 
 	}
 }
 
