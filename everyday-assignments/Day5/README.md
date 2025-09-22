@@ -93,3 +93,5 @@ function handleUserAge() {
 
 ageModal.addEventListener('click', handleUserAge)
 ```
+### Regarding `handleUserAge` and `convertTo12HourFormat` 
+These two tasks need some refactoring to follow clean code principles. Feel free to refactor them till I have some time to do so. 
