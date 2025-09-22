@@ -162,3 +162,58 @@ function handleUserAge() {
 }
 
 ageModal.addEventListener('click', handleUserAge)
+
+// 5. Count the number of vowels
+console.log('Count the number of vowels')
+function countVowels(word) {
+  let vowelsCount = 0
+  const vowels = 'aeiou'
+  const lowercasedWord = word.toLowerCase()
+  for(let i = 0; i < lowercasedWord.length; i++) {
+    if(vowels.includes(lowercasedWord[i])) {
+      vowelsCount++
+    }
+  }
+  return vowelsCount
+}
+// 6. 24 to 12 hour format . With claude help
+function convertTo12HourFormat(hour) {
+  if(isNaN(hour)) {
+    // the user pressed cancel, so hour = null
+    // but we immediately used parseInt(), so parseInt(null) will return NaN
+    return
+  }
+  if(hour < 0 || hour > 23) {
+    throw new Error("Hour must be between 0 and 23")
+  }
+  let hourIn12HourFormat
+  let period = "AM"
+
+  if(hour === 0) {
+    // midnight
+    hourIn12HourFormat = 12
+  }
+  if(hour > 0 && hour < 12) {
+    // between 1 AM and 11 AM
+    hourIn12HourFormat = hour
+  }
+  if(hour === 12) {
+    // noon time
+    hourIn12HourFormat = 12
+    period = "PM"
+  }
+  if(hour > 12) {
+    // afternoon
+    hourIn12HourFormat = hour - 12
+    period = "PM"
+  }
+
+  return `${hourIn12HourFormat} ${period}`
+}
+function showHourConversionModal() {
+const hour =  parseInt(prompt("Enter the hour you want to convert"))
+console.log(convertTo12HourFormat(hour))
+}
+const timeConverterBtn = document.querySelector(".time-converter")
+timeConverterBtn.addEventListener('click', showHourConversionModal)
+// console.log(convertTo12HourFormat(hour))
