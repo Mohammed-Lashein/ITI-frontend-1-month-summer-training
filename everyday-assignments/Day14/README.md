@@ -1,0 +1,2 @@
+# Bootstrap second assignment.
+The pdf is present on the [instructor's github account](https://github.com/MohamedEmary/ITI-client-side-tech/blob/main/assignments/bootstrap/session-2/PDFs/assigmnent.pdf).
