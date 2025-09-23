@@ -1,6 +1,9 @@
 # Final Project -- A very Basic Ecommerce website
 
-[Live Demo](https://iti-final-project-frontend.netlify.app/)
+[Live Demo](https://iti-final-project-frontend.netlify.app/).  
+You can check the corresponding [jira project](https://mohammed-lashein2700.atlassian.net/jira/software/projects/IA/list) If you would like to see this project's tasks and epics.
+
+Back to readme business:  
 
 I like ecommerce projects because they have a lot of details and require good structure. But since time wasn't on my side, there were no time to build a complex structure.  
 
