@@ -19,6 +19,7 @@ ____
 - [The sx prop](#the-sx-prop)
 - [What converted the `id` from a number to a string?](#what-converted-the-id-from-a-number-to-a-string)
 - [Regarding the mock data](#regarding-the-mock-data)
+- [Future features to be added to the project](#future-features-to-be-added-to-the-project)
 
 ### The error encountered while trying to fetch data from a local file
 Given this code snippet: 
@@ -95,5 +96,15 @@ const {increaseCartQuantity, decreaseCartQuantity, removeFromCart} = useCartCont
 const { id } = useParams() // returns the id as a string
 }
 ```
+_____
 ### Regarding the mock data
 I got the mock data from [fakestoreapi](https://fakestoreapi.com/). It is a great api for prototyping. But I will be keeping the `db.json` file instead of calling the api to avoid the troubles of api integration for now. 
+____
+### Future features to be added to the project: 
+
+1. Loading indicator till the products get fetched
+2. Using Redux to have a one way data flow architecture
+3. Try making the components yourself instead of depending on MUI
+4. Auth Functionality
+5. Admin page that shows the orders
+6. User Orders page to show each user's orders
