@@ -15,6 +15,9 @@ ____
 
 ## Table of contents
 - [The error encountered while trying to fetch data from a local file](#the-error-encountered-while-trying-to-fetch-data-from-a-local-file)
+- [Where can I find the theme object?](#where-can-i-find-the-theme-object)
+- [The sx prop](#the-sx-prop)
+- [What converted the `id` from a number to a string?](#what-converted-the-id-from-a-number-to-a-string)
 
 ### The error encountered while trying to fetch data from a local file
 Given this code snippet: 
@@ -37,3 +40,57 @@ That's why we got an error on trying to parse the returned page as a json.
 The solution?  
 Place `db.json` in `public` folder, thus it is served as a static file and we can read its contents using `fetch`
 _____
+### Where can I find the theme object?
+Given this component: 
+```jsx
+<Typography variant="body2" sx={{ color: 'text.secondary' }}>
+  {description}
+</Typography>
+```
+Although that I haven't configured a theme, this component uses a color and it is rendering correctly. Where is it getting the configuration from?  
+Claude pointed out that MUI by default provides a default theme which the components use.  
+
+After inspecting that theme by loggin `useTheme()`, I didn't find `'text.secondary'`.  
+=> Claude mentioned that it exists in `theme.palette.text.secondary`, but MUI can read it with using the shortcut `'text.secondary'`.  
+
+I asked further, how can MUI make this mapping?  
+Claude explained: In the `sx` prop, MUI automatically resolves these paths to `theme.palette.*`.  
+
+Since time isn't on my side, I have no time to dig further about the details of this mapping. Let's defer it for later
+
+I found a note in [the docs](https://mui.com/system/getting-started/the-sx-prop/#palette)
+_____
+### The sx prop
+Given these styles
+```jsx
+<CardMedia
+	component='img'
+	height='140'
+	image={image}
+	alt='green iguana'
+	sx={{
+		objectFit: 'contain',
+		'&:hover': {
+			transform: 'scale(0.8)',
+		},
+	}}
+/>
+```
+This syntax is from emotion (The one with `&:hover` is the one that caught my eyes the most)
+When you use sx in MUI, you're essentially writing Emotion styles
+____
+### What converted the `id` from a number to a string?
+I spent an hour trying to figure out why in the `CartItem` component on trying to get the certain cart item by filtering the `products` array, I was always getting `undefined`.  
+
+After further insepction, I found that the `products` array had the `id` as a `number`, whereas it was stored in the `cartItems` array as a `string`.  
+When did that conversion happen?  
+We passed the `id` to the cart in the `ProductDetailsPage`, which fetched the `id` as a string from the `useParams`!  
+
+If I had made the call to the API directly, then I wouldn't have encountered this issue. But since I am in the prototyping phase, I have used mock data instead.
+```jsx
+function ProductDetailsPage() {
+	const [product, setProduct] = useState({})
+const {increaseCartQuantity, decreaseCartQuantity, removeFromCart} = useCartContext()
+const { id } = useParams() // returns the id as a string
+}
+```
