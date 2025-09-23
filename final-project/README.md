@@ -1,5 +1,7 @@
 # Final Project -- A very Basic Ecommerce website
 
+[Live Demo](https://iti-final-project-frontend.netlify.app/)
+
 I like ecommerce projects because they have a lot of details and require good structure. But since time wasn't on my side, there were no time to build a complex structure.  
 
 Also, I am a fan of small commits, but I will create some non-small commits for this project for the aforementioned reason.  
