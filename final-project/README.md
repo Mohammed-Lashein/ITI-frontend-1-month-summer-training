@@ -18,6 +18,7 @@ ____
 - [Where can I find the theme object?](#where-can-i-find-the-theme-object)
 - [The sx prop](#the-sx-prop)
 - [What converted the `id` from a number to a string?](#what-converted-the-id-from-a-number-to-a-string)
+- [Regarding the mock data](#regarding-the-mock-data)
 
 ### The error encountered while trying to fetch data from a local file
 Given this code snippet: 
@@ -94,3 +95,5 @@ const {increaseCartQuantity, decreaseCartQuantity, removeFromCart} = useCartCont
 const { id } = useParams() // returns the id as a string
 }
 ```
+### Regarding the mock data
+I got the mock data from [fakestoreapi](https://fakestoreapi.com/). It is a great api for prototyping. But I will be keeping the `db.json` file instead of calling the api to avoid the troubles of api integration for now. 
