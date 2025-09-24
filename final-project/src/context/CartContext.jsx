@@ -4,6 +4,7 @@ export const CartContext = createContext({})
 
 export function CartProvider({ children }) {
 	const [cartItems, setCartItems] = useState(JSON.parse(sessionStorage.getItem('cart')) || [])
+  const [hasPlacedOrder, setHasPlacedOrder] = useState(false)
 
 	const cartQuantity = cartItems.reduce((quantity, item) => item?.quantity + quantity, 0)
 
@@ -62,7 +63,10 @@ export function CartProvider({ children }) {
 				decreaseCartQuantity,
 				removeFromCart,
 				cartItems,
+        setCartItems,
 				cartQuantity,
+        hasPlacedOrder,
+        setHasPlacedOrder
 			}}
 		>
 			{children}

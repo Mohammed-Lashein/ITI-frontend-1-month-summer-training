@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import CartItem from '../components/CartItem'
 import Typography from '@mui/material/Typography'
+import { Button } from '@mui/material'
 
 function Cart() {
 	const [products, setProducts] = useState([])
@@ -19,7 +20,7 @@ function Cart() {
 			.then((res) => res.json())
 			.then((res) => setProducts(res))
 	}, [])
-	const { cartItems } = useCartContext()
+	const { cartItems, hasPlacedOrder, setHasPlacedOrder, setCartItems } = useCartContext()
 
 	function getCartTotal() {
 		if (products.length > 0) {
@@ -33,7 +34,7 @@ function Cart() {
 	}
 	const cartTotal = getCartTotal()
 
-	if (cartItems.length === 0) {
+	if (cartItems.length === 0 && !hasPlacedOrder) {
 		return (
 			<Typography
 				variant='h3'
@@ -43,6 +44,25 @@ function Cart() {
 			</Typography>
 		)
 	}
+	function placeOrder() {
+		setHasPlacedOrder(true)
+		setCartItems([])
+		// send order data to the backend with a data structure conforming to the API documentation
+	}
+	if (hasPlacedOrder) {
+		return (
+			<Typography
+				variant='h3'
+				sx={{ paddingTop: '3rem' }}
+			>
+				Thanks for shopping with us !
+			</Typography>
+		)
+	}
+
+  useEffect(() => {
+
+  }, [hasPlacedOrder])
 
 	return (
 		<div style={{ padding: '2rem' }}>
@@ -58,7 +78,7 @@ function Cart() {
 							<TableCell align='center'>Price</TableCell>
 							<TableCell align='center'>Quantity</TableCell>
 							<TableCell align='center'>Total price</TableCell>
-              {/* The empty cell is for the remove from cart button */}
+							{/* The empty cell is for the remove from cart button */}
 							<TableCell align='center'></TableCell>
 						</TableRow>
 					</TableHead>
@@ -72,9 +92,16 @@ function Cart() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<Box sx={{ padding: '1rem' }}>
-				<Typography component='span'>Cart Total:</Typography> ${cartTotal}
+			<Box sx={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+				<Typography component='span'>Cart Total: ${cartTotal}</Typography>
+				<Button
+					onClick={() => placeOrder()}
+					variant='contained'
+				>
+					Place order
+				</Button>
 			</Box>
+			<Box></Box>
 		</div>
 	)
 }

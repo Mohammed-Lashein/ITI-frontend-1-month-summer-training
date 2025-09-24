@@ -38,6 +38,35 @@ export default function Navbar() {
 					sx={{ marginInlineStart: 'auto' }}
 				>
 					<Link
+						to='/login'
+						style={{
+							textDecoration: 'none',
+							color: 'inherit',
+						}}
+					>
+						<Button>
+							<Typography variant='span'>Login</Typography>
+						</Button>
+					</Link>
+				</ListItem>
+				<ListItem role='none'>
+					<Link
+						to='/Register'
+						style={{
+							textDecoration: 'none',
+							color: 'inherit',
+						}}
+					>
+						<Button>
+							<Typography variant='span'>Register</Typography>
+						</Button>
+					</Link>
+				</ListItem>
+				<ListItem
+					role='none'
+					// sx={{ marginInlineStart: 'auto' }}
+				>
+					<Link
 						to='/cart'
 						style={{
 							textDecoration: 'none',

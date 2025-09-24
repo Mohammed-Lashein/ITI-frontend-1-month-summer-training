@@ -3,6 +3,8 @@ import Homepage from './pages/Homepage'
 import ProductDetailsPage from './pages/ProductDetailsPage'
 import Cart from './pages/Cart'
 import Navbar from './components/Navbar'
+import Login from './components/Login';
+import Register from './components/Register'
 
 function App() {
 	return (
@@ -22,6 +24,9 @@ function App() {
 						path='/cart'
 						element={<Cart />}
 					/>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+
 				</Routes>
 			</BrowserRouter>
 		</>
