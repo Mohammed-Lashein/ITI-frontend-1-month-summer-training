@@ -40,38 +40,58 @@ body {
   /* margin: 0.2rem; */
 }
 
-.my-container .block-1 {
-  grid-row-start: span 2;
+/* using claude's recommendation of using grid-template-areas */
+.my-container {
+  /* 
+    It is important to set the number of rows, otherwise block1 and block2 will be adjacent. 
+    Is it mandatory to set the rows number? 
+    => In this video by Elzero Web School, he set the rows numbers so I think the answer is yes.
+    Link to code from the video: 
+    https://elzero.org/css-grid-parent-complete-layout-with-template-areas/
+  */
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas:
+    "block1 . . ."
+    "block1 block2 block2 block2"
+    "block3 block3 block6 block7"
+    "block3 block3 block6 block8"
+    "block4 block5 block6 block9"
+    "block4 block5 block6 block9"
+  ;
 }
 
-.my-container .block-2 {
-  grid-row-start: 2;
-  grid-column-start: 2;
-  grid-column-end: 5;
+.block-1 {
+  grid-area: block1;
 }
 
-.my-container .block-3 {
-  grid-column-start: span 2;
-  grid-row-start: span 2;
+.block-2 {
+  grid-area: block2;
 }
 
-.my-container .block-4 {
-  grid-column-start: 1;
-  grid-row-start: span 2;
+.block-3 {
+  grid-area: block3;
 }
 
-.my-container .block-5 {
-  grid-column-start: 2;
-  grid-row-start: span 2;
+.block-4 {
+  grid-area: block4;
 }
 
-.my-container .block-6 {
-  grid-column-start: 3;
-  grid-row-start: 3;
-  grid-row-end: 7;
+.block-5 {
+  grid-area: block5;
 }
 
-.my-container .block-7 {
-  grid-column-start: 4;
-  grid-row-start: 3;
+.block-6 {
+  grid-area: block6;
+}
+
+.block-7 {
+  grid-area: block7;
+}
+
+.block-8 {
+  grid-area: block8;
+}
+
+.block-9 {
+  grid-area: block9;
 }
