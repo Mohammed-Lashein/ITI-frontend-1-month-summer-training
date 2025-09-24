@@ -8,8 +8,6 @@ import { useAuthContext } from '../hooks/useAuthContext'
 function Login() {
 	const navigate = useNavigate()
 	const { setIsLoggedIn, isLoggedIn } = useAuthContext()
-	const obj = useAuthContext()
-	console.log(obj)
 	function handleUserLogin() {
 		// check input fields
 		// send form input to the client
