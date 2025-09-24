@@ -95,3 +95,51 @@ body {
 .block-9 {
   grid-area: block9;
 }
+/* 
+  Below are the styles responsible for responsive layout. Note that this is the old way of setting 
+  media queries (doing the desktop first then adding changes to modify the layout on small screens).
+
+  The standard now is to design mobile first, then modify the layout as you go up by overriding the 
+  mobile first styles (as tailwind does)
+*/
+/* sm screens */
+@media screen and (max-width: 800px) {
+  .my-container {
+    margin: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-areas:
+      "block1 ."
+      "block1 block2"
+      "block3 block3"
+      "block4 block5"
+      "block4 block5"
+      "block6 block6"
+      "block6 block6"
+      "block6 block6"
+      "block7 block7"
+      "block8 block8"
+      "block9 block9"
+      "block9 block9"
+    ;
+  }
+}
+/* xs screens */
+@media screen and (max-width: 500px) {
+  .my-container {
+    margin: auto;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "block1"
+      "."
+      "block2"
+      "block3"
+      "block4"
+      "block5"
+      "block6"
+      "block7"
+      "block8"
+      "block9"
+    ;
+  }
+}
