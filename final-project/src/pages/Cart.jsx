@@ -11,9 +11,12 @@ import Box from '@mui/material/Box'
 import CartItem from '../components/CartItem'
 import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
+import { useAuthContext } from '../hooks/useAuthContext'
+import { useNavigate } from 'react-router'
 
 function Cart() {
 	const [products, setProducts] = useState([])
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		fetch('/db.json')
@@ -21,6 +24,7 @@ function Cart() {
 			.then((res) => setProducts(res))
 	}, [])
 	const { cartItems, hasPlacedOrder, setHasPlacedOrder, setCartItems } = useCartContext()
+	const { isLoggedIn } = useAuthContext()
 
 	function getCartTotal() {
 		if (products.length > 0) {
@@ -45,9 +49,15 @@ function Cart() {
 		)
 	}
 	function placeOrder() {
-		setHasPlacedOrder(true)
-		setCartItems([])
-		// send order data to the backend with a data structure conforming to the API documentation
+		if (isLoggedIn) {
+			// user must be signed in to place an order
+			setHasPlacedOrder(true)
+			setCartItems([])
+			// send order data to the backend with a data structure conforming to the API documentation
+		}
+		if (!isLoggedIn) {
+			navigate('/login')
+		}
 	}
 	if (hasPlacedOrder) {
 		return (
@@ -59,10 +69,6 @@ function Cart() {
 			</Typography>
 		)
 	}
-
-  useEffect(() => {
-
-  }, [hasPlacedOrder])
 
 	return (
 		<div style={{ padding: '2rem' }}>

@@ -1,23 +1,25 @@
-import { Grid, Paper, Stack, TextField } from '@mui/material'
-import Box from '@mui/joy/Box'
-import FormGroup from '@mui/material/FormGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import { Stack, TextField } from '@mui/material'
+
 import Typography from '@mui/material/Typography'
-import  Button  from '@mui/material/Button';
+import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 function Login() {
-  const navigate = useNavigate()
-  function handleUserLogin() {
-    // check input fields
-    // send form input to the client
+	const navigate = useNavigate()
+	const { setIsLoggedIn, isLoggedIn } = useAuthContext()
+	const obj = useAuthContext()
+	console.log(obj)
+	function handleUserLogin() {
+		// check input fields
+		// send form input to the client
 
-    // if user entered correct credentials
-    // store the login token
-    
-    // redirect to cart
-    navigate('/cart')
-  }
+		// if user entered correct credentials
+		// store the login token + login the user
+		setIsLoggedIn(true)
+		navigate('/cart')
+		// redirect to cart
+	}
 	return (
 		<div
 			style={{
@@ -33,7 +35,7 @@ function Login() {
 				direction='column'
 				minWidth={800}
 				alignItems='center'
-        gap={2}
+				gap={2}
 			>
 				<Typography
 					sx={{ textAlign: 'center', paddingBottom: '2rem' }}
@@ -52,9 +54,15 @@ function Login() {
 					label='password'
 					variant='outlined'
 					sx={{ width: '400px' }}
-          type='password'
+					type='password'
 				/>
-        <Button variant='contained' sx={{width: '200px', marginTop: '1rem'}} onClick={(e) => handleUserLogin(e)}>Login</Button>
+				<Button
+					variant='contained'
+					sx={{ width: '200px', marginTop: '1rem' }}
+					onClick={(e) => handleUserLogin(e)}
+				>
+					Login
+				</Button>
 			</Stack>
 		</div>
 	)
